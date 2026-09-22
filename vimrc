@@ -6,13 +6,26 @@ set encoding=utf-8
 set fileencodings=utf-8,gb18030,gbk,cp936
 set termencoding=utf-8
 
-" 默认开启行号
+" 显示相对和绝对行号
 set number
+set relativenumber
+
+augroup smart_relativenumber
+	autocmd!
+	autocmd InsertEnter * set norelativenumber number
+	autocmd InsertLeave * set relativenumber number
+augroup END
 
 """""""""""""""""""""""
 
 """""""""""""""""""""""
 " vim-pluging
+let data_dir = has('nvim') ? stdpath('data') . '/site' : '~/.vim'
+if empty(glob(data_dir . '/autoload/plug.vim'))
+  silent execute '!curl -fLo '.data_dir.'/autoload/plug.vim --create-dirs  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
+
 call plug#begin()
 
 " List your plugins here
