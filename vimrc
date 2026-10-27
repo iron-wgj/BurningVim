@@ -16,6 +16,15 @@ augroup smart_relativenumber
 	autocmd InsertLeave * set relativenumber number
 augroup END
 
+" search 高亮
+set hlsearch
+
+" leader
+let mapleader = "\<Space>"
+
+" remap <esc>
+inoremap jj <Esc>
+
 """""""""""""""""""""""
 
 """""""""""""""""""""""
@@ -53,6 +62,20 @@ Plug 'octol/vim-cpp-enhanced-highlight'
 " quick file explorer
 Plug 'justinmk/vim-dirvish'
 
+" realtime format
+"Plug 'skywind3000/vim-rt-format', { 'do': 'sudo apt-get install python3-autopep8' }
+
+" LeaderF
+Plug 'Yggdroot/LeaderF', { 'do': ':LeaderfInstallCExtension' }
+
+Plug 'vim-airline/vim-airline'
+
+Plug 'Shougo/echodoc.vim'
+
+Plug 'yegappan/lsp'
+
+Plug 'junegunn/vim-peekaboo'
+
 call plug#end()
 
 """""""""""""""""""""""
@@ -74,6 +97,9 @@ let g:gutentags_cache_dir = s:vim_tags
 let g:gutentags_ctags_extra_args = ['--fields=+niazS', '--extra=+q']
 let g:gutentags_ctags_extra_args += ['--c++-kinds=+px']
 let g:gutentags_ctags_extra_args += ['--c-kinds=+px']
+
+" display gutentags process
+set statusline+=%{gutentags#statusline()}
 
 " 检测 ~/.cache/tags 不存在就新建
 if !isdirectory(s:vim_tags)
@@ -163,5 +189,40 @@ function! Terminal_MetaMode(mode)
 endfunc
 
 call Terminal_MetaMode(0)
+""""""""""""""""""""""
 
+""""""""""""""""""""""
+" 默认在 INSERT 模式下按 ENTER 格式化当前代码行，将下面设置
+" 成 1 的话，可以用 CTRL+ENTER 来格式化，ENTER 将保留原来的功能
+"let g:rtf_ctrl_enter = 0
+"
+"" 离开 INSERT 模式的时候再格式化一次
+"let g:rtf_on_insert_leave = 1
+""""""""""""""""""""""
+
+""""""""""""""""""""""
+" Leaderf configuration
+let g:Lf_WindowPosition = 'popup' " 浮动窗口
+
+let g:Lf_ShortcutF = '<c-p>'
+let g:Lf_ShortcutB = '<leader>fb'
+noremap <leader>fm :LeaderfMru<cr>
+noremap <leader>ff :LeaderfFunction!<cr>
+noremap <leader>fb :LeaderfBuffer<cr>
+noremap <leader>ft :LeaderfTag<cr>
+let g:Lf_StlSeparator = { 'left': '', 'right': '', 'font': '' }
+let g:Lf_CommandMap = {'<C-R>': ['<C-G>']}
+let g:Lf_WorkingDirectoryMode = 'Ac'
+let g:Lf_CacheDirectory = expand('~/.vim/cache')
+let g:Lf_ShowRelativePath = 0
+let g:Lf_HideHelp = 1
+let g:Lf_StlColorscheme = 'powerline'
+let g:Lf_PopupColorscheme = 'onedark'
+let g:Lf_PreviewResult = {'Function':0, 'BufTag':0}
+""""""""""""""""""""""
+
+""""""""""""""""""""""
+" echodoc
+set noshowmode
+let g:echodoc_enable_at_startup = 1
 """"""""""""""""""""""
